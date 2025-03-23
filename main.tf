@@ -58,15 +58,16 @@ module "module_aws_alb" {
     hp-http = {
       port     = 80
       protocol = "HTTP"
-    }
-    forward = {
+      forward = {
         target_group_key = "hp-instance"
       }
+    }
+    
   }
 
   target_groups = {
     hp-instance = {
-      name_prefix      = "hp-blog-"
+      name_prefix      = "hp"
       protocol         = "HTTP"
       port             = 80
       target_type      = "instance"
