@@ -59,6 +59,9 @@ module "module_aws_alb" {
       port     = 80
       protocol = "HTTP"
     }
+    forward = {
+        target_group_key = "hp-instance"
+      }
   }
 
   target_groups = {
@@ -70,10 +73,6 @@ module "module_aws_alb" {
       target_id        = aws_instance.blog.id
     }
   }
-
-  forward = {
-        target_group_key = "hp-instance"
-      }
 
   tags = {
     Environment = "Development"
