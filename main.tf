@@ -22,7 +22,7 @@ resource "aws_instance" "blog" {
   ami           = data.aws_ami.app_ami.id
   instance_type = var.instance_type
 
-  vpc_security_group_ids = [module.module_aws_security_group.blog_anees_sg.id]
+  vpc_security_group_ids = [module.module_aws_security_group.security_group_id]
 
   tags = {
     Name = "HelloWorld_Anees_shutup"
