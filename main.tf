@@ -66,7 +66,7 @@ module "module_aws_alb" {
 
   target_groups = {
     hp-instance = {
-      name_prefix      = "h1"
+      name_prefix      = "hp-blog-"
       protocol         = "HTTP"
       port             = 80
       target_type      = "instance"
