@@ -46,6 +46,37 @@ resource "aws_instance" "blog" {
   }
 }
 
+module "module_aws_alb" {
+  source = "terraform-aws-modules/alb/aws"
+
+  name            = "blog_alb"
+  vpc_id          = module.module_aws_vpc.vpc_id
+  subnets         = module.module_aws_vpc.public_subnets
+  security_groups = [module.module_aws_security_group.security_group_id]
+
+  listeners = {
+    ex-http-https-redirect = {
+      port     = 80
+      protocol = "HTTP"
+    }
+  }
+
+  target_groups = {
+    hp-instance = {
+      name_prefix      = "h1"
+      protocol         = "HTTP"
+      port             = 80
+      target_type      = "instance"
+      target_id        = aws_instance.blog.id
+    }
+  }
+
+  tags = {
+    Environment = "Development"
+    Project     = "Huma_Project"
+  }
+}
+
 module "module_aws_security_group" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "5.3.0"
