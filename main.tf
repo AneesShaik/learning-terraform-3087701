@@ -46,7 +46,7 @@ module "module_autoscaling" {
   instance_type          = var.instance_type
   traffic_source_attachments = {
     traffic_source = {
-    identifier = module.module_aws_alb.target_groups.hp-instance.arn
+    traffic_source_identifier = module.module_aws_alb.target_groups["hp-instance"].arn
     type       = "elbv2"
   }
   }
