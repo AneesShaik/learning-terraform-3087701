@@ -55,7 +55,7 @@ module "module_aws_alb" {
   security_groups = [module.module_aws_security_group.security_group_id]
 
   listeners = {
-    ex-http-https-redirect = {
+    hp-http = {
       port     = 80
       protocol = "HTTP"
     }
@@ -70,6 +70,10 @@ module "module_aws_alb" {
       target_id        = aws_instance.blog.id
     }
   }
+
+  forward = {
+        target_group_key = "hp-instance"
+      }
 
   tags = {
     Environment = "Development"
