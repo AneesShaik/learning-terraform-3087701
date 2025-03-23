@@ -33,17 +33,21 @@ module "module_aws_vpc" {
   }
 }
 
-resource "aws_instance" "blog" {
-  ami           = data.aws_ami.app_ami.id
-  instance_type = var.instance_type
 
-  vpc_security_group_ids = [module.module_aws_security_group.security_group_id]
+module "module_autoscaling" {
+  source  = "terraform-aws-modules/autoscaling/aws"
+  version = "8.1.0"
 
-  subnet_id = module.module_aws_vpc.public_subnets[1]
+  name = "hp-autoscaling"
 
-  tags = {
-    Name = "HelloWorld_Anees_shutup"
-  }
+  min_size  = 1
+  max_size  = 3
+  
+  vpc_zone_identifier    = module.module_aws_vpc.public_subnets
+  target_group_arns      = module.module_aws_alb.target_group_arns
+  security_groups = [module.module_aws_security_group.security_group_id]
+  image_id               = data.aws_ami.app_ami.id
+  instance_type          = var.instance_type
 }
 
 module "module_aws_alb" {
@@ -70,8 +74,7 @@ module "module_aws_alb" {
       name_prefix      = "hp"
       protocol         = "HTTP"
       port             = 80
-      target_type      = "instance"
-      target_id        = aws_instance.blog.id
+      target_type      = "instance
     }
   }
 
