@@ -14,9 +14,6 @@ data "aws_ami" "app_ami" {
   owners = ["979382823631"] # Bitnami
 }
 
-data "aws_vpc" "default" {
-  default = true
-}
 
 module "module_aws_vpc" {
   source = "terraform-aws-modules/vpc/aws"
@@ -74,7 +71,7 @@ module "module_aws_alb" {
       name_prefix      = "hp"
       protocol         = "HTTP"
       port             = 80
-      target_type      = "instance
+      target_type      = "instance"
     }
   }
 
