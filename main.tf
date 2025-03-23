@@ -45,6 +45,7 @@ module "module_autoscaling" {
   image_id               = data.aws_ami.app_ami.id
   instance_type          = var.instance_type
   traffic_source_attachments = {
+    create_attachment = false
     traffic_source = {
     identifier = module.module_aws_alb.target_groups.hp-instance.arn
     type       = "elbv2"
