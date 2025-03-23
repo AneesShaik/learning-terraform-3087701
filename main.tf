@@ -71,6 +71,7 @@ module "module_aws_alb" {
       protocol         = "HTTP"
       port             = 80
       target_type      = "instance"
+      target_id = module.module_autoscaling.target_id
     }
   }
 
