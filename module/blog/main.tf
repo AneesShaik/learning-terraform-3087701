@@ -55,7 +55,7 @@ module "module_autoscaling" {
 module "module_aws_alb" {
   source = "terraform-aws-modules/alb/aws"
 
-  name            = "blog-alb"
+  name            = "${var.environment.name}-blog-alb"
   vpc_id          = module.module_aws_vpc.vpc_id
   subnets         = module.module_aws_vpc.public_subnets
   security_groups = [module.module_aws_security_group.security_group_id]
