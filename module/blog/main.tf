@@ -35,13 +35,13 @@ module "module_autoscaling" {
   source  = "terraform-aws-modules/autoscaling/aws"
   version = "8.1.0"
 
-  name = "hp-autoscaling"
+  name = "${var.environment.name}-autoscaling-anees"
 
-  min_size  = 1
-  max_size  = 3
+  min_size            = var.asg_min
+  max_size            = var.asg_max
   
   vpc_zone_identifier    = module.module_aws_vpc.public_subnets
-  security_groups = [module.module_aws_security_group.security_group_id]
+  security_groups        = [module.module_aws_security_group.security_group_id]
   image_id               = data.aws_ami.app_ami.id
   instance_type          = var.instance_type
   traffic_source_attachments = {
