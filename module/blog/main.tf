@@ -60,7 +60,7 @@ module "module_aws_alb" {
   subnets         = module.module_aws_vpc.public_subnets
   security_groups = [module.module_aws_security_group.security_group_id]
   
-  enable_deletion_protection = true
+  enable_deletion_protection = false
 
   listeners = {
     hp-http = {
